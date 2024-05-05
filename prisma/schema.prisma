@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @db.VarChar(255)
+  password String @db.VarChar(255)
+  role     Role
+}
+
+model Pengurus {
+  id         Int          @id @default(autoincrement())
+  name       String       @db.VarChar(255)
+  DoB        DateTime?    @db.Date
+  address    String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now())
+  pembayaran Pembayaran[]
+  penyaluran Penyaluran[]
+}
+
+model Pembayaran {
+  id          Int      @id @default(autoincrement())
+  muzakkiName String   @db.VarChar(255)
+  paymentDate DateTime @db.Date
+  amountRice  Int?
+  amountMoney Int?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  pengurusId  Int
+  pengurus    Pengurus @relation(fields: [pengurusId], references: [id])
+}
+
+model Penyaluran {
+  id          Int      @id @default(autoincrement())
+  muzakkiName String   @db.VarChar(255)
+  paymentDate DateTime @db.Date
+  amountRice  Int?
+  amountMoney Int?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  pengurusId  Int
+  pengurus    Pengurus @relation(fields: [pengurusId], references: [id])
+}
+
+model Masyarakat {
+  id        Int            @id @default(autoincrement())
+  name      String         @db.VarChar(255)
+  DoB       DateTime?      @db.Date
+  PoB       String?
+  job       String?
+  type      typeMasyarakat
+  phone     String?
+  address   String?
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @default(now())
+}
+
+enum Role {
+  ADMIN
+  DKM
+}
+
+enum typeMasyarakat {
+  Muzakki
+  Mustahik
+}
