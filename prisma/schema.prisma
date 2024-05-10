@@ -19,7 +19,7 @@ model Pengurus {
   id         Int          @id @default(autoincrement())
   pengurusId String       @default(cuid())
   name       String       @unique @db.VarChar(255)
-  DoB        DateTime?    
+  DoB        DateTime?
   address    String?
   createdAt  DateTime     @default(now())
   pembayaran Pembayaran[]
@@ -27,33 +27,33 @@ model Pengurus {
 }
 
 model Pembayaran {
-  id          Int      @id @default(autoincrement())
-  muzakkiName String   @db.VarChar(255)
-  paymentDate DateTime 
-  amountRice  Int?
-  amountMoney Int?
-  notes       String?
-  createdAt   DateTime @default(now())
-  pengurusId  Int
-  pengurus    Pengurus @relation(fields: [pengurusId], references: [id])
+  id           Int      @id @default(autoincrement())
+  muzakkiName  String   @db.VarChar(255)
+  paymentDate  DateTime
+  amountRice   Int?
+  amountMoney  Int?
+  notes        String?
+  createdAt    DateTime @default(now())
+  pengurusName String   @db.VarChar(255)
+  pengurus     Pengurus @relation(fields: [pengurusName], references: [name])
 }
 
 model Penyaluran {
-  id          Int      @id @default(autoincrement())
-  muzakkiName String   @db.VarChar(255)
-  paymentDate DateTime 
-  amountRice  Int?
-  amountMoney Int?
-  notes       String?
-  createdAt   DateTime @default(now())
-  pengurusId  Int
-  pengurus    Pengurus @relation(fields: [pengurusId], references: [id])
+  id           Int      @id @default(autoincrement())
+  muzakkiName  String   @db.VarChar(255)
+  paymentDate  DateTime
+  amountRice   Int?
+  amountMoney  Int?
+  notes        String?
+  createdAt    DateTime @default(now())
+  pengurusName String   @db.VarChar(255)
+  pengurus     Pengurus @relation(fields: [pengurusName], references: [name])
 }
 
 model Masyarakat {
   id        Int            @id @default(autoincrement())
   name      String         @db.VarChar(255)
-  DoB       DateTime?      
+  DoB       DateTime?
   PoB       String?
   job       String?
   type      typeMasyarakat

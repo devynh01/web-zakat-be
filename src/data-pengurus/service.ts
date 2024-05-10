@@ -22,7 +22,7 @@ export const getPengurusById = async (id: number) => {
   const pengurus = await findPengurusById(id);
 
   if (!pengurus) {
-    throw new Error("Tidak ada data pengurus");
+    throw new Error("Tidak ada data id pengurus");
   }
 
   return pengurus;
@@ -31,9 +31,9 @@ export const getPengurusById = async (id: number) => {
 export const getPengurusByName = async (name: string) => {
   const pengurus = await findPengurusByName(name);
 
-  if (!pengurus) {
-    throw new Error("Tidak ada data pengurus");
-  }
+  // if (!pengurus) {
+  //   throw new Error("Tidak ada data nama pengurus");
+  // }
 
   return pengurus;
 };
