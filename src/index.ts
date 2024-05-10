@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import dataPengurusController from "./data-pengurus/controller";
+import mustahikController from "./mustahik/controller";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/data-pengurus", dataPengurusController);
+app.use("/mustahik", mustahikController);
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);

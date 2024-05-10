@@ -7,6 +7,7 @@ import {
   getPengurusByName,
   updatePengurusById,
 } from "./service";
+import { TCreatePengurus } from "../types";
 
 const router = Router();
 
@@ -28,14 +29,37 @@ router.get("/", async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({
       success: false,
-      message: "Terjadi kesalahan",
-      data: error.message,
+      message: error.message,
+    });
+  }
+});
+
+router.get("/:id", async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  try {
+    const result = await getPengurusById(id);
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "Data pengurus tidak ditemukan",
+        data: null,
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Berhasil menemukan pengurus",
+      data: result,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 });
 
 router.post("/", async (req: Request, res: Response) => {
-  const newPengurus = req.body;
+  const newPengurus = req.body as TCreatePengurus;
   try {
     const isNameAlreadyExist = await getPengurusByName(newPengurus.name);
     if (isNameAlreadyExist) {
@@ -54,8 +78,7 @@ router.post("/", async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({
       success: false,
-      message: "Terjadi kesalahan",
-      data: error.message,
+      message: error.message,
     });
   }
 });
@@ -71,8 +94,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({
       success: false,
-      message: "Terjadi kesalahan",
-      data: error.message,
+      message: error.message,
     });
   }
 });
@@ -98,8 +120,7 @@ router.patch("/:id", async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({
       success: false,
-      message: "Terjadi kesalahan",
-      data: error.message,
+      message: error.message,
     });
   }
 });
