@@ -1,34 +1,35 @@
 import { Request, Response, Router } from "express";
 import {
-  getAllMustahik,
-  getMustahikById,
-  createNewMustahik,
-  deleteMustahikById,
-  updateMustahikById,
+  createNewMunfiq,
+  deleteMunfiqById,
+  getAllMunfiq,
+  getMunfiqById,
+  updateMunfiqById,
 } from "./service";
-import { TCreateMustahik } from "../types";
+import { TCreateInfaq } from "../types";
 import { getPengurusByName } from "../data-pengurus/service";
 
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const result = await getAllMustahik();
+    const result = await getAllMunfiq();
 
     if (!result.length) {
       return res.status(404).json({
         success: false,
-        message: "Data mustahik tidak ditemukan",
+        message: "Data munfiq tidak ditemukan",
         data: null,
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Berhasil menampilkan semua mustahik",
+      message: "Berhasil menampilkan semua munfiq",
       data: result,
     });
   } catch (error: any) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -41,22 +42,22 @@ router.get("/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
 
   try {
-    const result = await getMustahikById(id);
-
+    const result = await getMunfiqById(id);
     if (!result) {
       return res.status(404).json({
         success: false,
-        message: "Data id Mustahik tidak ditemukan",
+        message: "Data id munfiq tidak ditemukan",
         data: null,
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Berhasil menemukan id mustahik",
+      message: "Berhasil menemukan id munfiq",
       data: result,
     });
   } catch (error: any) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -66,10 +67,10 @@ router.get("/:id", async (req: Request, res: Response) => {
 });
 
 router.post("/", async (req: Request, res: Response) => {
-  const newMustahik = req.body as TCreateMustahik;
+  const newInfaq = req.body as TCreateInfaq;
 
   try {
-    const isPengurusExist = await getPengurusByName(newMustahik.pengurusName);
+    const isPengurusExist = await getPengurusByName(newInfaq.pengurusName);
     if (!isPengurusExist) {
       return res.status(404).json({
         success: false,
@@ -77,11 +78,10 @@ router.post("/", async (req: Request, res: Response) => {
       });
     }
 
-    const result = await createNewMustahik(newMustahik);
-
+    const result = await createNewMunfiq(newInfaq);
     return res.status(201).json({
       success: true,
-      message: "Berhasil menambahkan mustahik baru",
+      message: "Berhasil menambahkan munfiq baru",
       data: result,
     });
   } catch (error: any) {
@@ -93,14 +93,16 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:id", async (req: Request, res: Response) => {
+router.patch("/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
+  const newInfaq = req.body;
 
   try {
-    await deleteMustahikById(id);
+    const result = await updateMunfiqById(id, newInfaq);
     return res.status(200).json({
       success: true,
-      message: "Berhasil menghapus mustahik",
+      message: "Berhasil mengupdate munfiq",
+      data: result,
     });
   } catch (error: any) {
     return res.status(500).json({
@@ -110,17 +112,14 @@ router.delete("/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.patch("/:id", async (req: Request, res: Response) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
-  const newMustahik = req.body;
 
   try {
-    const result = await updateMustahikById(id, newMustahik);
-
+    await deleteMunfiqById(id);
     return res.status(200).json({
       success: true,
-      message: "Berhasil mengupdate mustahik",
-      data: result,
+      message: "Berhasil menghapus munfiq",
     });
   } catch (error: any) {
     return res.status(500).json({

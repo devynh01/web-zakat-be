@@ -32,6 +32,7 @@ router.get("/", async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       message: error.message,
+      data: null,
     });
   }
 });
@@ -46,6 +47,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       return res.status(404).json({
         success: false,
         message: "Data Muzakki tidak ditemukan",
+        data: null,
       });
     }
 
@@ -58,6 +60,7 @@ router.get("/:id", async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       message: error.message,
+      data: null,
     });
   }
 });
