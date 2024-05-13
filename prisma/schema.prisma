@@ -81,6 +81,6 @@ enum Role {
 }
 
 enum typeMasyarakat {
-  Muzakki
-  Mustahik
+  MUZAKKI
+  MUSTAHIK
 }

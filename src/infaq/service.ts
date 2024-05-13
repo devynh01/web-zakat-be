@@ -11,25 +11,21 @@ import {
 export const getAllMunfiq = async () => {
   const munfiq = await findAllMunfiq();
 
-  if (!munfiq) {
-    throw new Error("Tidak ada data munfiq");
-  }
-
   return munfiq;
 };
 
 export const getMunfiqById = async (id: number) => {
   const munfiq = await findMunfiqById(id);
 
-  if (!munfiq) {
-    throw new Error("Tidak ada data id munfiq");
-  }
-
   return munfiq;
 };
 
 export const createNewMunfiq = async (newMunfiq: TCreateInfaq) => {
   const munfiq = await insertMunfiq(newMunfiq);
+
+  if (!munfiq) {
+    throw new Error("Gagal menambahkan data munfiq");
+  }
 
   return munfiq;
 };
@@ -44,6 +40,10 @@ export const updateMunfiqById = async (id: number, newMunfiq: TCreateInfaq) => {
 
   const munfiq = await updateMunfiq(id, newMunfiq);
 
+  if (!munfiq) {
+    throw new Error("Gagal mengupdate data munfiq");
+  }
+
   return munfiq;
 };
 
@@ -51,6 +51,10 @@ export const deleteMunfiqById = async (id: number) => {
   await getMunfiqById(id);
 
   const munfiq = await deleteMunfiq(id);
+
+  if (!munfiq) {
+    throw new Error("Gagal menghapus data munfiq");
+  }
 
   return munfiq;
 };

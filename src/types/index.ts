@@ -38,6 +38,25 @@ type TInfaq = {
   pengurusName: TPengurus["name"]; // foreign key
 };
 
+type TMasyarakat = {
+  id: number;
+  name: string;
+  DoB: Date;
+  PoB: string;
+  job: string;
+  type: typeMasyarakat;
+
+  phone: string;
+  address: string;
+};
+
+export enum typeMasyarakat {
+  MUZAKKI = "MUZAKKI",
+  MUSTAHIK = "MUSTAHIK",
+}
+
+export type TCreateMasyarakat = Omit<TMasyarakat, "id">;
+
 export type TCreateInfaq = Omit<TInfaq, "id">;
 
 export type TCreateMustahik = Omit<TMustahik, "id">;
