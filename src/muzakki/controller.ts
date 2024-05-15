@@ -3,6 +3,7 @@ import {
   createNewMuzakki,
   deleteMuzakkiById,
   getAllMuzakki,
+  getAllMuzakkiByYear,
   getMuzakkiById,
   updateMuzakkiById,
 } from "./service";
@@ -15,7 +16,7 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const result = await getAllMuzakki();
 
-    if (!result.length) {
+    if (!result.muzakki.length) {
       return res.status(404).json({
         success: false,
         message: "Data muzakki tidak ditemukan",
@@ -37,6 +38,33 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/laporan", async (req: Request, res: Response) => {
+  const { year } = req.query;
+  try {
+    const result = await getAllMuzakkiByYear(Number(year));
+
+    if (!result.muzakki.length) {
+      return res.status(404).json({
+        success: false,
+        message: `Data muzakki pada tahun ${year} tidak ditemukan`,
+        data: null,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `Berhasil menemukan data muzakki pada tahun ${year}`,
+      data: result,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+});
+
 router.get("/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
 
@@ -46,14 +74,14 @@ router.get("/:id", async (req: Request, res: Response) => {
     if (!result) {
       return res.status(404).json({
         success: false,
-        message: "Data Muzakki tidak ditemukan",
+        message: `Data Muzakki id ${id} tidak ditemukan`,
         data: null,
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Berhasil menemukan muzakki",
+      message: `Berhasil menemukan id muzakki ${id}`,
       data: result,
     });
   } catch (error: any) {
@@ -100,7 +128,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     await deleteMuzakkiById(id);
     return res.status(200).json({
       success: true,
-      message: "Berhasil menghapus muzakki",
+      message: `Berhasil menghapus muzakki id ${id}`,
     });
   } catch (error: any) {
     return res.status(500).json({
@@ -119,7 +147,7 @@ router.patch("/:id", async (req: Request, res: Response) => {
 
     return res.status(200).json({
       success: true,
-      message: "Berhasil mengupdate muzakki",
+      message: `Berhasil mengupdate muzakki id ${id}`,
       data: result,
     });
   } catch (error: any) {

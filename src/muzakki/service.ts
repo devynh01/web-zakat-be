@@ -3,6 +3,7 @@ import { TCreateMuzakki } from "../types";
 import {
   deleteMuzakki,
   findAllMuzakki,
+  findAllMuzakkiByYear,
   findMuzakkiById,
   insertMuzakki,
   updateMuzakki,
@@ -14,6 +15,12 @@ export const getAllMuzakki = async () => {
   if (!muzakki) {
     throw new Error("Tidak ada data muzakki");
   }
+
+  return muzakki;
+};
+
+export const getAllMuzakkiByYear = async (year: number) => {
+  const muzakki = await findAllMuzakkiByYear(year);
 
   return muzakki;
 };
