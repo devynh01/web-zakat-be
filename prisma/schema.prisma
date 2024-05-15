@@ -84,3 +84,12 @@ enum typeMasyarakat {
   MUZAKKI
   MUSTAHIK
 }
+
+// create a table called report with contents related to the infaq, payment, distribution and management tables. I want this report table to have data regarding the amount of money and rice infaq, the amount of money and rice payments, the amount of money and rice distribution, and can also be selected based on year
+model Laporan {
+  id          Int      @id @default(autoincrement())
+  year        String
+  amountRice  Int
+  amountMoney Int
+  createdAt   DateTime @default(now())
+}

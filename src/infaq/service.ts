@@ -6,10 +6,17 @@ import {
   findMunfiqById,
   insertMunfiq,
   updateMunfiq,
+  findAllMunfiqByYear,
 } from "./repository";
 
 export const getAllMunfiq = async () => {
   const munfiq = await findAllMunfiq();
+
+  return munfiq;
+};
+
+export const getAllMunfiqByYear = async (year: number) => {
+  const munfiq = await findAllMunfiqByYear(year);
 
   return munfiq;
 };

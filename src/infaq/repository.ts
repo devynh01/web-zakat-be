@@ -4,7 +4,56 @@ import { TCreateInfaq } from "../types";
 export const findAllMunfiq = async () => {
   const munfiq = await prisma.infaq.findMany();
 
-  return munfiq;
+  const totalRice = await prisma.infaq.aggregate({
+    _sum: {
+      amountRice: true,
+    },
+  });
+
+  const totalMoney = await prisma.infaq.aggregate({
+    _sum: {
+      amountMoney: true,
+    },
+  });
+
+  return { munfiq, totalRice, totalMoney };
+};
+
+export const findAllMunfiqByYear = async (year: number) => {
+  const munfiq = await prisma.infaq.findMany({
+    where: {
+      date: {
+        gte: new Date(year, 0, 1),
+        lte: new Date(year, 11, 31),
+      },
+    },
+  });
+
+  const totalRice = await prisma.infaq.aggregate({
+    _sum: {
+      amountRice: true,
+    },
+    where: {
+      date: {
+        gte: new Date(year, 0, 1),
+        lte: new Date(year, 11, 31),
+      },
+    },
+  });
+
+  const totalMoney = await prisma.infaq.aggregate({
+    _sum: {
+      amountMoney: true,
+    },
+    where: {
+      date: {
+        gte: new Date(year, 0, 1),
+        lte: new Date(year, 11, 31),
+      },
+    },
+  });
+
+  return { munfiq, totalRice, totalMoney };
 };
 
 export const findMunfiqById = async (id: number) => {

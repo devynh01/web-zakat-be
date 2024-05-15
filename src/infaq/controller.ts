@@ -3,6 +3,7 @@ import {
   createNewMunfiq,
   deleteMunfiqById,
   getAllMunfiq,
+  getAllMunfiqByYear,
   getMunfiqById,
   updateMunfiqById,
 } from "./service";
@@ -15,7 +16,7 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const result = await getAllMunfiq();
 
-    if (!result.length) {
+    if (!result.munfiq.length) {
       return res.status(404).json({
         success: false,
         message: "Data munfiq tidak ditemukan",
@@ -38,6 +39,34 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/laporan", async (req: Request, res: Response) => {
+  const { year } = req.query;
+
+  try {
+    const result = await getAllMunfiqByYear(Number(year));
+    if (!result.munfiq.length) {
+      return res.status(404).json({
+        success: false,
+        message: `Data pada tahun ${year} tidak ditemukan`,
+        data: null,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `Berhasil menemukan data pada tahun ${year}`,
+      data: result,
+    });
+  } catch (error: any) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: error,
+      data: null,
+    });
+  }
+});
+
 router.get("/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
 
@@ -46,14 +75,14 @@ router.get("/:id", async (req: Request, res: Response) => {
     if (!result) {
       return res.status(404).json({
         success: false,
-        message: "Data id munfiq tidak ditemukan",
+        message: `Data id munfiq ${id} tidak ditemukan`,
         data: null,
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Berhasil menemukan id munfiq",
+      message: `Berhasil menemukan id munfiq ${id}`,
       data: result,
     });
   } catch (error: any) {
@@ -101,7 +130,7 @@ router.patch("/:id", async (req: Request, res: Response) => {
     const result = await updateMunfiqById(id, newInfaq);
     return res.status(200).json({
       success: true,
-      message: "Berhasil mengupdate munfiq",
+      message: `Berhasil mengupdate munfiq id ${id}`,
       data: result,
     });
   } catch (error: any) {
@@ -119,7 +148,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     await deleteMunfiqById(id);
     return res.status(200).json({
       success: true,
-      message: "Berhasil menghapus munfiq",
+      message: `Berhasil menghapus id munfiq ${id}`,
     });
   } catch (error: any) {
     return res.status(500).json({
