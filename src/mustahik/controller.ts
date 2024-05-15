@@ -5,6 +5,7 @@ import {
   createNewMustahik,
   deleteMustahikById,
   updateMustahikById,
+  getAllMustahikByYear,
 } from "./service";
 import { TCreateMustahik } from "../types";
 import { getPengurusByName } from "../data-pengurus/service";
@@ -15,7 +16,7 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const result = await getAllMustahik();
 
-    if (!result.length) {
+    if (!result.mustahik.length) {
       return res.status(404).json({
         success: false,
         message: "Data mustahik tidak ditemukan",
@@ -37,6 +38,33 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/laporan", async (req: Request, res: Response) => {
+  const { year } = req.query;
+  try {
+    const result = await getAllMustahikByYear(Number(year));
+
+    if (!result.mustahik.length) {
+      return res.status(404).json({
+        success: false,
+        message: `Data mustahik pada tahun ${year} tidak ditemukan`,
+        data: null,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `Berhasil menemukan data mustahik pada tahun ${year}`,
+      data: result,
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+});
+
 router.get("/:id", async (req: Request, res: Response) => {
   const id = Number(req.params.id);
 
@@ -46,14 +74,14 @@ router.get("/:id", async (req: Request, res: Response) => {
     if (!result) {
       return res.status(404).json({
         success: false,
-        message: "Data id Mustahik tidak ditemukan",
+        message: `Data id Mustahik ${id} tidak ditemukan`,
         data: null,
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Berhasil menemukan id mustahik",
+      message: `Berhasil menemukan id mustahik ${id}`,
       data: result,
     });
   } catch (error: any) {

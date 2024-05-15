@@ -3,6 +3,7 @@ import { TCreateMustahik } from "../types";
 import {
   deleteMustahik,
   findAllMustahik,
+  findAllMustahikByYear,
   findMustahikById,
   insertMustahik,
   updateMustahik,
@@ -14,6 +15,12 @@ export const getAllMustahik = async () => {
   if (!mustahik) {
     throw new Error("Tidak ada data mustahik");
   }
+
+  return mustahik;
+};
+
+export const getAllMustahikByYear = async (year: number) => {
+  const mustahik = await findAllMustahikByYear(year);
 
   return mustahik;
 };

@@ -47,14 +47,14 @@ router.get("/laporan", async (req: Request, res: Response) => {
     if (!result.munfiq.length) {
       return res.status(404).json({
         success: false,
-        message: `Data pada tahun ${year} tidak ditemukan`,
+        message: `Data infaq pada tahun ${year} tidak ditemukan`,
         data: null,
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: `Berhasil menemukan data pada tahun ${year}`,
+      message: `Berhasil menemukan data infaq pada tahun ${year}`,
       data: result,
     });
   } catch (error: any) {
