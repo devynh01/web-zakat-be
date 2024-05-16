@@ -13,34 +13,27 @@ import { getPengurusByName } from "../data-pengurus/service";
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
-  try {
-    const result = await getAllMuzakki();
+  const { year } = req.query;
 
-    if (!result.muzakki.length) {
-      return res.status(404).json({
-        success: false,
-        message: "Data muzakki tidak ditemukan",
-        data: null,
+  try {
+    if (!year || year === "all") {
+      const result = await getAllMuzakki();
+
+      if (!result.muzakki.length) {
+        return res.status(404).json({
+          success: false,
+          message: "Data muzakki tidak ditemukan",
+          data: null,
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Berhasil menampilkan semua muzakki",
+        data: result,
       });
     }
 
-    return res.status(200).json({
-      success: true,
-      message: "Berhasil menampilkan semua muzakki",
-      data: result,
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-      data: null,
-    });
-  }
-});
-
-router.get("/laporan", async (req: Request, res: Response) => {
-  const { year } = req.query;
-  try {
     const result = await getAllMuzakkiByYear(Number(year));
 
     if (!result.muzakki.length) {

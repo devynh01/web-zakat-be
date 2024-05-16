@@ -8,11 +8,27 @@ export const findAllMustahik = async () => {
     _sum: {
       amountRice: true,
     },
+
+    _count: {
+      amountRice: true,
+    },
+
+    where: {
+      amountRice: { not: 0 },
+    },
   });
 
   const totalMoney = await prisma.penyaluran.aggregate({
     _sum: {
       amountMoney: true,
+    },
+
+    _count: {
+      amountMoney: true,
+    },
+
+    where: {
+      amountMoney: { not: 0 },
     },
   });
 
@@ -33,11 +49,17 @@ export const findAllMustahikByYear = async (year: number) => {
     _sum: {
       amountRice: true,
     },
+
+    _count: {
+      amountRice: true,
+    },
     where: {
       distributionDate: {
         gte: new Date(year, 0, 1),
         lte: new Date(year, 11, 31),
       },
+
+      amountRice: { not: 0 },
     },
   });
 
@@ -45,11 +67,18 @@ export const findAllMustahikByYear = async (year: number) => {
     _sum: {
       amountMoney: true,
     },
+
+    _count: {
+      amountMoney: true,
+    },
+
     where: {
       distributionDate: {
         gte: new Date(year, 0, 1),
         lte: new Date(year, 11, 31),
       },
+
+      amountMoney: { not: 0 },
     },
   });
 

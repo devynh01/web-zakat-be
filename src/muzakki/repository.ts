@@ -8,11 +8,27 @@ export const findAllMuzakki = async () => {
     _sum: {
       amountRice: true,
     },
+
+    _count: {
+      amountRice: true,
+    },
+
+    where: {
+      amountRice: { not: 0 },
+    },
   });
 
   const totalMoney = await prisma.pembayaran.aggregate({
     _sum: {
       amountMoney: true,
+    },
+
+    _count: {
+      amountMoney: true,
+    },
+
+    where: {
+      amountMoney: { not: 0 },
     },
   });
 
@@ -33,11 +49,18 @@ export const findAllMuzakkiByYear = async (year: number) => {
     _sum: {
       amountRice: true,
     },
+
+    _count: {
+      amountRice: true,
+    },
+
     where: {
       paymentDate: {
         gte: new Date(year, 0, 1),
         lte: new Date(year, 11, 31),
       },
+
+      amountRice: { not: 0 },
     },
   });
 
@@ -45,11 +68,18 @@ export const findAllMuzakkiByYear = async (year: number) => {
     _sum: {
       amountMoney: true,
     },
+
+    _count: {
+      amountMoney: true,
+    },
+
     where: {
       paymentDate: {
         gte: new Date(year, 0, 1),
         lte: new Date(year, 11, 31),
       },
+
+      amountMoney: { not: 0 },
     },
   });
 
@@ -81,10 +111,7 @@ export const insertMuzakki = async (newMuzakki: TCreateMuzakki) => {
   return muzakki;
 };
 
-export const updateMuzakki = async (
-  id: number,
-  newMuzakki: TCreateMuzakki
-) => {
+export const updateMuzakki = async (id: number, newMuzakki: TCreateMuzakki) => {
   const muzakki = await prisma.pembayaran.update({
     where: {
       id,

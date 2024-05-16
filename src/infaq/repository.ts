@@ -8,11 +8,27 @@ export const findAllMunfiq = async () => {
     _sum: {
       amountRice: true,
     },
+
+    _count: {
+      amountRice: true,
+    },
+
+    where: {
+      amountRice: { not: 0 },
+    },
   });
 
   const totalMoney = await prisma.infaq.aggregate({
     _sum: {
       amountMoney: true,
+    },
+
+    _count: {
+      amountMoney: true,
+    },
+
+    where: {
+      amountMoney: { not: 0 },
     },
   });
 
@@ -33,11 +49,18 @@ export const findAllMunfiqByYear = async (year: number) => {
     _sum: {
       amountRice: true,
     },
+
+    _count: {
+      amountRice: true,
+    },
+
     where: {
       date: {
         gte: new Date(year, 0, 1),
         lte: new Date(year, 11, 31),
       },
+
+      amountRice: { not: 0 },
     },
   });
 
@@ -45,11 +68,18 @@ export const findAllMunfiqByYear = async (year: number) => {
     _sum: {
       amountMoney: true,
     },
+
+    _count: {
+      amountMoney: true,
+    },
+
     where: {
       date: {
         gte: new Date(year, 0, 1),
         lte: new Date(year, 11, 31),
       },
+
+      amountMoney: { not: 0 },
     },
   });
 

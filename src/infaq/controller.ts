@@ -13,37 +13,29 @@ import { getPengurusByName } from "../data-pengurus/service";
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
-  try {
-    const result = await getAllMunfiq();
-
-    if (!result.munfiq.length) {
-      return res.status(404).json({
-        success: false,
-        message: "Data munfiq tidak ditemukan",
-        data: null,
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "Berhasil menampilkan semua munfiq",
-      data: result,
-    });
-  } catch (error: any) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-      data: null,
-    });
-  }
-});
-
-router.get("/laporan", async (req: Request, res: Response) => {
   const { year } = req.query;
 
   try {
+    if (!year || year === "all") {
+      const result = await getAllMunfiq();
+
+      if (!result.munfiq.length) {
+        return res.status(404).json({
+          success: false,
+          message: "Data munfiq tidak ditemukan",
+          data: null,
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Berhasil menampilkan semua munfiq",
+        data: result,
+      });
+    }
+
     const result = await getAllMunfiqByYear(Number(year));
+
     if (!result.munfiq.length) {
       return res.status(404).json({
         success: false,
@@ -61,7 +53,7 @@ router.get("/laporan", async (req: Request, res: Response) => {
     console.log(error);
     return res.status(500).json({
       success: false,
-      message: error,
+      message: error.message,
       data: null,
     });
   }
