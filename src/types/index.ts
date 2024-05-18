@@ -31,7 +31,6 @@ type TInfaq = {
   id?: number;
   name: string;
   date: Date;
-  amountRice: number;
   amountMoney: number;
   notes: string;
 

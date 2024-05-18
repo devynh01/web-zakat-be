@@ -7,6 +7,7 @@ import mustahikController from "./mustahik/controller";
 import muzakkiController from "./muzakki/controller";
 import infaqController from "./infaq/controller";
 import masyarakatController from "./masyarakat/controller";
+import laporanController from "./laporan/controller";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/mustahik", mustahikController);
 app.use("/muzakki", muzakkiController);
 app.use("/infaq", infaqController);
 app.use("/masyarakat", masyarakatController);
+app.use("/laporan", laporanController);
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);

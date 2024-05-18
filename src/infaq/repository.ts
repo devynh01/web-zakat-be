@@ -4,20 +4,6 @@ import { TCreateInfaq } from "../types";
 export const findAllMunfiq = async () => {
   const munfiq = await prisma.infaq.findMany();
 
-  const totalRice = await prisma.infaq.aggregate({
-    _sum: {
-      amountRice: true,
-    },
-
-    _count: {
-      amountRice: true,
-    },
-
-    where: {
-      amountRice: { not: 0 },
-    },
-  });
-
   const totalMoney = await prisma.infaq.aggregate({
     _sum: {
       amountMoney: true,
@@ -32,7 +18,7 @@ export const findAllMunfiq = async () => {
     },
   });
 
-  return { munfiq, totalRice, totalMoney };
+  return { munfiq, totalMoney };
 };
 
 export const findAllMunfiqByYear = async (year: number) => {
@@ -45,25 +31,6 @@ export const findAllMunfiqByYear = async (year: number) => {
     },
   });
 
-  const totalRice = await prisma.infaq.aggregate({
-    _sum: {
-      amountRice: true,
-    },
-
-    _count: {
-      amountRice: true,
-    },
-
-    where: {
-      date: {
-        gte: new Date(year, 0, 1),
-        lte: new Date(year, 11, 31),
-      },
-
-      amountRice: { not: 0 },
-    },
-  });
-
   const totalMoney = await prisma.infaq.aggregate({
     _sum: {
       amountMoney: true,
@@ -83,7 +50,7 @@ export const findAllMunfiqByYear = async (year: number) => {
     },
   });
 
-  return { munfiq, totalRice, totalMoney };
+  return { munfiq, totalMoney };
 };
 
 export const findMunfiqById = async (id: number) => {
@@ -101,7 +68,6 @@ export const insertMunfiq = async (newMunfiq: TCreateInfaq) => {
     data: {
       name: newMunfiq.name,
       date: newMunfiq.date,
-      amountRice: newMunfiq.amountRice,
       amountMoney: newMunfiq.amountMoney,
       notes: newMunfiq.notes,
       pengurusName: newMunfiq.pengurusName,
@@ -119,7 +85,6 @@ export const updateMunfiq = async (id: number, newMunfiq: TCreateInfaq) => {
     data: {
       name: newMunfiq.name,
       date: newMunfiq.date,
-      amountRice: newMunfiq.amountRice,
       amountMoney: newMunfiq.amountMoney,
       notes: newMunfiq.notes,
       pengurusName: newMunfiq.pengurusName,
