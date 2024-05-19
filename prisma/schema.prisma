@@ -17,52 +17,61 @@ model User {
 
 model Pengurus {
   id         Int          @id @default(autoincrement())
-  name       String       @db.VarChar(255)
-  DoB        DateTime?    @db.Date
+  pengurusId String       @default(cuid())
+  name       String       @unique @db.VarChar(255)
+  DoB        DateTime?
   address    String?
   createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @default(now())
   pembayaran Pembayaran[]
   penyaluran Penyaluran[]
+  Infaq      Infaq[]
 }
 
 model Pembayaran {
-  id          Int      @id @default(autoincrement())
-  muzakkiName String   @db.VarChar(255)
-  paymentDate DateTime @db.Date
-  amountRice  Int?
-  amountMoney Int?
-  notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-  pengurusId  Int
-  pengurus    Pengurus @relation(fields: [pengurusId], references: [id])
+  id           Int      @id @default(autoincrement())
+  muzakkiName  String   @db.VarChar(255)
+  paymentDate  DateTime
+  amountRice   Int
+  amountMoney  Int
+  notes        String?
+  createdAt    DateTime @default(now())
+  pengurusName String   @db.VarChar(255)
+  pengurus     Pengurus @relation(fields: [pengurusName], references: [name])
 }
 
 model Penyaluran {
-  id          Int      @id @default(autoincrement())
-  muzakkiName String   @db.VarChar(255)
-  paymentDate DateTime @db.Date
-  amountRice  Int?
-  amountMoney Int?
-  notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-  pengurusId  Int
-  pengurus    Pengurus @relation(fields: [pengurusId], references: [id])
+  id               Int      @id @default(autoincrement())
+  mustahikName     String   @db.VarChar(255)
+  distributionDate DateTime
+  amountRice       Int
+  amountMoney      Int
+  notes            String?
+  createdAt        DateTime @default(now())
+  pengurusName     String   @db.VarChar(255)
+  pengurus         Pengurus @relation(fields: [pengurusName], references: [name])
+}
+
+model Infaq {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(255)
+  date         DateTime
+  amountMoney  Int
+  notes        String?
+  createdAt    DateTime @default(now())
+  pengurusName String   @db.VarChar(255)
+  pengurus     Pengurus @relation(fields: [pengurusName], references: [name])
 }
 
 model Masyarakat {
   id        Int            @id @default(autoincrement())
   name      String         @db.VarChar(255)
-  DoB       DateTime?      @db.Date
+  DoB       DateTime?
   PoB       String?
   job       String?
   type      typeMasyarakat
   phone     String?
   address   String?
   createdAt DateTime       @default(now())
-  updatedAt DateTime       @default(now())
 }
 
 enum Role {
@@ -71,6 +80,6 @@ enum Role {
 }
 
 enum typeMasyarakat {
-  Muzakki
-  Mustahik
+  MUZAKKI
+  MUSTAHIK
 }
