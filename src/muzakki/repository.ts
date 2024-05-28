@@ -32,7 +32,9 @@ export const findAllMuzakki = async () => {
     },
   });
 
-  return { muzakki, totalRice, totalMoney };
+  const totalMuzakki = muzakki.length;
+
+  return { muzakki, totalRice, totalMoney, totalMuzakki };
 };
 
 export const findAllMuzakkiByYear = async (year: number) => {
@@ -83,7 +85,9 @@ export const findAllMuzakkiByYear = async (year: number) => {
     },
   });
 
-  return { muzakki, totalRice, totalMoney };
+  const totalMuzakki = muzakki.length;
+
+  return { muzakki, totalRice, totalMoney, totalMuzakki };
 };
 
 export const findMuzakkiById = async (id: number) => {

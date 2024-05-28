@@ -9,10 +9,12 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  username String @db.VarChar(255)
-  password String @db.VarChar(255)
-  role     Role
+  id        Int      @id @default(autoincrement())
+  uuid      String   @default(cuid())
+  username  String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  role      Role
+  createdAt DateTime @default(now())
 }
 
 model Pengurus {

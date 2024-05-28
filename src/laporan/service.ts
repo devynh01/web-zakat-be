@@ -1,10 +1,12 @@
 import { findAllPengurus } from "../data-pengurus/repository";
 import { findAllMunfiqByYear } from "../infaq/repository";
+import { findAllMasyarakat } from "../masyarakat/repository";
 import { findAllMustahikByYear } from "../mustahik/repository";
 import { findAllMuzakkiByYear } from "../muzakki/repository";
 
 export const getLaporanByYear = async (year: number) => {
   const pengurus = await findAllPengurus();
+  const masyarakat = await findAllMasyarakat();
   const munfiq = await findAllMunfiqByYear(Number(year));
   const mustahik = await findAllMustahikByYear(Number(year));
   const muzakki = await findAllMuzakkiByYear(Number(year));
@@ -18,11 +20,11 @@ export const getLaporanByYear = async (year: number) => {
   const totalRiceMuzakki = muzakki.totalRice._sum.amountRice; // total beras muzakki (pembayar zakat)
   const muzakkiByRice = muzakki.totalRice._count.amountRice; // total muzakki yang zakat beras
 
-  const totalMuzakki = muzakkiByRice + muzakkiByMoney; // total muzakki
+  const totalMuzakki = muzakki.totalMuzakki; // total muzakki
 
   const totalMoneyInfaq = munfiq.totalMoney._sum.amountMoney; // total uang munfiq (pembayar infaq)
 
-  const totalMunfiq = munfiq.totalMoney._count.amountMoney; // total munfiq
+  const totalMunfiq = munfiq.totalMunfiq; // total munfiq
 
   const totalDonatur = totalMuzakki + totalMunfiq; // total donatur
   const totalMoneyPembayar = totalMoneyMuzakki! + totalMoneyInfaq!; // total uang pembayar
@@ -32,9 +34,10 @@ export const getLaporanByYear = async (year: number) => {
   const totalRiceMustahik = mustahik.totalRice._sum.amountRice; // total beras mustahik (penyaluran zakat)
   const mustahikByRice = mustahik.totalRice._count.amountRice; // total mustahik yang diberi beras
 
-  const totalMustahik = mustahikByRice + mustahikByMoney; // total penerima
+  const totalMustahik = mustahik.totalMustahik; // total penerima
 
   const totalPengurus = pengurus.length; // total pengurus
+  const totalMasyarakat = masyarakat.length; // total masyarakat
 
   const moneyForAmil = totalMoneyMuzakki! * 0.05; // beban amil 5% dari total uang muzakki
   const riceForAmil = totalRiceMuzakki! * 0.05; // beban amil 5% dari total beras muzakki
@@ -102,6 +105,8 @@ export const getLaporanByYear = async (year: number) => {
   return {
     penerimaan,
     penyaluran,
+    totalPengurus,
+    totalMasyarakat,
     totalSaldoUang: saldoMoney,
     totalSaldoBeras: saldoRice,
     year,

@@ -18,7 +18,9 @@ export const findAllMunfiq = async () => {
     },
   });
 
-  return { munfiq, totalMoney };
+  const totalMunfiq = munfiq.length;
+
+  return { munfiq, totalMoney, totalMunfiq };
 };
 
 export const findAllMunfiqByYear = async (year: number) => {
@@ -50,7 +52,9 @@ export const findAllMunfiqByYear = async (year: number) => {
     },
   });
 
-  return { munfiq, totalMoney };
+  const totalMunfiq = munfiq.length;
+
+  return { munfiq, totalMoney, totalMunfiq };
 };
 
 export const findMunfiqById = async (id: number) => {

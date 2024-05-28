@@ -32,7 +32,9 @@ export const findAllMustahik = async () => {
     },
   });
 
-  return { mustahik, totalRice, totalMoney };
+  const totalMustahik = mustahik.length;
+
+  return { mustahik, totalRice, totalMoney, totalMustahik };
 };
 
 export const findAllMustahikByYear = async (year: number) => {
@@ -82,7 +84,9 @@ export const findAllMustahikByYear = async (year: number) => {
     },
   });
 
-  return { mustahik, totalRice, totalMoney };
+  const totalMustahik = mustahik.length;
+
+  return { mustahik, totalRice, totalMoney, totalMustahik };
 };
 
 export const findMustahikById = async (id: number) => {

@@ -49,10 +49,29 @@ type TMasyarakat = {
   address: string;
 };
 
+type TRegister = {
+  id?: number;
+  username: string;
+  password: string;
+  role: Role;
+};
+
+export enum Role {
+  ADMIN = "ADMIN",
+  DKM = "DKM",
+}
+
 export enum typeMasyarakat {
   MUZAKKI = "MUZAKKI",
   MUSTAHIK = "MUSTAHIK",
 }
+
+export type TLogin = {
+  username: string;
+  password: string;
+};
+
+export type TCreateUser = Omit<TRegister, "id">;
 
 export type TCreateMasyarakat = Omit<TMasyarakat, "id">;
 
