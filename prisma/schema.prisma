@@ -23,6 +23,7 @@ model Pengurus {
   name       String       @unique @db.VarChar(255)
   DoB        DateTime?
   address    String?
+  position   String
   createdAt  DateTime     @default(now())
   pembayaran Pembayaran[]
   penyaluran Penyaluran[]
@@ -33,7 +34,7 @@ model Pembayaran {
   id           Int      @id @default(autoincrement())
   muzakkiName  String   @db.VarChar(255)
   paymentDate  DateTime
-  amountRice   Int
+  amountRice   Float
   amountMoney  Int
   notes        String?
   createdAt    DateTime @default(now())
@@ -45,7 +46,7 @@ model Penyaluran {
   id               Int      @id @default(autoincrement())
   mustahikName     String   @db.VarChar(255)
   distributionDate DateTime
-  amountRice       Int
+  amountRice       Float
   amountMoney      Int
   notes            String?
   createdAt        DateTime @default(now())

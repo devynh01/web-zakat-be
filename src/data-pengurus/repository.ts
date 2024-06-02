@@ -33,6 +33,7 @@ export const insertPengurus = async (newPengurus: TCreatePengurus) => {
       name: newPengurus.name,
       DoB: newPengurus.DoB,
       address: newPengurus.address,
+      position: newPengurus.position,
     },
   });
 
@@ -61,6 +62,7 @@ export const updatePengurus = async (
       name: newPengurus.name,
       DoB: newPengurus.DoB,
       address: newPengurus.address,
+      position: newPengurus.position,
     },
   });
 

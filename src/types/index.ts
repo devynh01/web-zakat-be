@@ -3,6 +3,7 @@ type TPengurus = {
   name: string;
   DoB: Date;
   address: string;
+  position: string;
 };
 
 type TMustahik = {
