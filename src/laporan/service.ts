@@ -91,14 +91,14 @@ export const getLaporanByYear = async (year: number) => {
         total: moneyForAmil,
       },
       beras: {
-        total: riceForAmil,
+        total: riceForAmil.toFixed(2),
       },
       total: totalPengurus,
     },
     total: {
       penerima: totalPenerima,
       uang: totalPenyaluranMoney,
-      beras: totalPenyaluranRice,
+      beras: totalPenyaluranRice.toFixed(2),
     },
   };
 
@@ -108,7 +108,7 @@ export const getLaporanByYear = async (year: number) => {
     totalPengurus,
     totalMasyarakat,
     totalSaldoUang: saldoMoney,
-    totalSaldoBeras: saldoRice,
+    totalSaldoBeras: saldoRice.toFixed(2),
     year,
   };
 };
