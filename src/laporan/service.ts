@@ -39,12 +39,14 @@ export const getLaporanByYear = async (year: number) => {
   const totalPengurus = pengurus.length; // total pengurus
   const totalMasyarakat = masyarakat.length; // total masyarakat
 
-  const moneyForAmil = totalMoneyMuzakki! * 0.05; // beban amil 5% dari total uang muzakki
-  const riceForAmil = totalRiceMuzakki! * 0.05; // beban amil 5% dari total beras muzakki
+  // const moneyForAmil = totalMoneyMuzakki! * 0.05; // beban amil 5% dari total uang muzakki
+  // const riceForAmil = totalRiceMuzakki! * 0.05; // beban amil 5% dari total beras muzakki
 
-  const totalPenerima = totalMustahik + totalPengurus; // total penerima
-  const totalPenyaluranMoney = moneyForAmil + totalMoneyMustahik!; // total uang penyaluran
-  const totalPenyaluranRice = riceForAmil + totalRiceMustahik!; // total beras penyaluran
+  const totalPenerima = totalMustahik; // total penerima
+  // const totalPenyaluranMoney = moneyForAmil + totalMoneyMustahik!; // total uang penyaluran
+  const totalPenyaluranMoney = totalMoneyMustahik!; // total uang penyaluran
+  // const totalPenyaluranRice = riceForAmil + totalRiceMustahik!; // total beras penyaluran
+  const totalPenyaluranRice = totalRiceMustahik!; // total beras penyaluran
 
   const saldoMoney = totalMoneyPembayar! - totalPenyaluranMoney!; // saldo uang
   const saldoRice = totalRiceMuzakki! - totalPenyaluranRice!; // saldo beras
@@ -87,18 +89,18 @@ export const getLaporanByYear = async (year: number) => {
       total: totalMustahik,
     },
     pengurus: {
-      uang: {
-        total: moneyForAmil,
-      },
-      beras: {
-        total: riceForAmil.toFixed(2),
-      },
+      // uang: {
+      //   total: moneyForAmil,
+      // },
+      // beras: {
+      //   total: riceForAmil.toFixed(2),
+      // },
       total: totalPengurus,
     },
     total: {
       penerima: totalPenerima,
       uang: totalPenyaluranMoney,
-      beras: totalPenyaluranRice.toFixed(2),
+      beras: totalPenyaluranRice,
     },
   };
 
@@ -108,7 +110,7 @@ export const getLaporanByYear = async (year: number) => {
     totalPengurus,
     totalMasyarakat,
     totalSaldoUang: saldoMoney,
-    totalSaldoBeras: saldoRice.toFixed(2),
+    totalSaldoBeras: saldoRice,
     year,
   };
 };
